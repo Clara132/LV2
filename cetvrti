@@ -1,22 +1,17 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def fja(kvadrat,redak,stupac):
-    crna = np.zeros((kvadrat,kvadrat))
-    bijela = np.ones((kvadrat,kvadrat))*255
-    redak1 = np.hstack([crna,bijela]*(stupac//2))
-    if stupac%2 != 0:
-        redak1 = np.hstack([redak1,crna])
-    
-    redak2 = np.hstack([bijela,crna]*(stupac//2))
-    if stupac%2 != 0:
-        redak2 = np.hstack([redak2, bijela])
+def funkcija(velicina_pix, visina, sirina):
+    bijeli_kvadrati = np.ones((velicina_pix, velicina_pix))
+    crni_kvadrati = np.zeros((velicina_pix, velicina_pix))
 
-    matrix = np.vstack([redak1,redak2] * (redak//2))
-    if redak % 2 != 0:
-        matrix = np.vstack([matrix,redak1])
-    return matrix
+    red1 = np.hstack([bijeli_kvadrati, crni_kvadrati] * (sirina))
+    red2 = np.hstack([crni_kvadrati, bijeli_kvadrati] * (sirina))
+    img = np.vstack([red1, red2] * (visina))
 
-img = fja(50,4,5)
-plt.imshow(img, cmap='gray', vmin=0, vmax=255)
+    return img[:visina*velicina_pix, :sirina*velicina_pix]
+
+img = funkcija(50, 4, 5)
+plt.figure()
+plt.imshow(img, cmap='gray')
 plt.show()
