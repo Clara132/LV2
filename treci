@@ -1,14 +1,40 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
 img = plt.imread("tiger.png")
 img = img[:,:,0].copy()
-
 print(img.shape)
+print(img.dtype)
 
-imgFlipped = np.fliplr(img)
-imgRotated = np.rot90(img,3)
+imgBrightness = []
+imgBrightness = img + 0.9
+imgBrightness[imgBrightness > 1] = 1
 
-imgResolution = img[::5,::5]
-imgBrightness = img+0.8
-imgBrightness[imgBrightness>1] = 1
+plt.figure()
+plt.imshow(img, cmap="gray")
+plt.show()
+
+img_rot = np.zeros((960,640))
+
+for i in range (0,640):
+    img_rot[:,640-1-i] = img[i,:]
+
+plt.figure()
+plt.imshow(img_rot, cmap="gray")
+plt.show()
+
+for i in range (0,640):
+    img_rot[:,i] = img[i,:]
+
+plt.figure()
+plt.imshow(img_rot, cmap="gray")
+plt.show()
+
+imgResolution = img[::10,::10]
+
+plt.figure()
+plt.imshow(imgResolution, cmap="gray")
+plt.show()
 
 visina, sirina = img.shape
 
@@ -16,10 +42,8 @@ print(sirina*0.25, sirina*0.5)
 
 novaSlika = img
 
-
 novaSlika[:,sirina//2:] = 0
 novaSlika[:,:sirina//4] = 0
-   
 
 plt.figure()
 plt.imshow(novaSlika, cmap="gray")
